@@ -1,0 +1,22 @@
+{
+  "name": "react-json-viewer",
+  "version": "0.0.0",
+  "main": "./lib/index.js",
+  "repository": "https://github.com/Hokkaidosunny/react-json-viewer.git",
+  "author": "xinfeng <xinfeng@pinduoduo.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf lib && bmp src -l typescript",
+    "release": "standard-version && npm publish --registry=https://registry.npmjs.org"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "autotypes": "^0.1.2",
+    "build-my-package": "^0.0.17",
+    "standard-version": "^5.0.0",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.3.3"
+  }
+}
