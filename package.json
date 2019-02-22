@@ -20,7 +20,6 @@
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",
     "@types/styled-components": "^4.1.10",
-    "autotypes": "^0.1.2",
     "build-my-package": "^0.0.17",
     "standard-version": "^5.0.0",
     "tslint": "^5.12.1",
