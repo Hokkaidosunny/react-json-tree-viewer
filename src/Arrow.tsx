@@ -2,22 +2,22 @@ import * as React from 'react'
 import { ArrowSpan } from './ui'
 
 interface Props {
-  isCollapsed: boolean
+  isExpanded: boolean
   ifShow: boolean
   [x: string]: any
 }
 
 const Arrow: React.SFC<Props> = props => {
-  const { isCollapsed, ifShow, ...otherProps } = props
+  const { isExpanded, ifShow, ...otherProps } = props
 
   if (!ifShow) {
     return <ArrowSpan style={{ visibility: 'hidden' }}>▶</ArrowSpan>
   }
 
-  return isCollapsed ? (
-    <ArrowSpan {...otherProps}>▶</ArrowSpan>
-  ) : (
+  return isExpanded ? (
     <ArrowSpan {...otherProps}>▼</ArrowSpan>
+  ) : (
+    <ArrowSpan {...otherProps}>▶</ArrowSpan>
   )
 }
 

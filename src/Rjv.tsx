@@ -8,20 +8,75 @@ import { KeySpan, NumberSpan, StringSpan, NullSpan, Row } from './ui'
 interface RjvProps {
   data: object
   hideRoot?: boolean
-  keyName?: string | number
+  keyName?: string
+  shouldExpandNode?: Function
+  path?: string[]
+  onArrowClick?: Function
 }
 
 class Rjv extends React.Component<RjvProps, any> {
   state = {
-    isCollapsed: false
+    isExpanded: true
   }
 
-  toggleCollapsed = () => {
-    const { isCollapsed } = this.state
-    this.setState({ isCollapsed: !isCollapsed })
+  componentDidMount() {
+    const isExpanded = this.shouldExpandNode()
+
+    this.setState({
+      isExpanded
+    })
   }
 
-  renderValueByType = (data: any) => {
+  shouldExpandNode = () => {
+    const { shouldExpandNode, data } = this.props
+
+    const ifNeedExpand = this.getIfNendExpand()
+    const currentPath = this.getCurrentPath()
+
+    if (shouldExpandNode && ifNeedExpand) {
+      return shouldExpandNode(currentPath, data)
+    }
+
+    return true
+  }
+
+  getCurrentPath = () => {
+    const { path, keyName } = this.props
+
+    let currentPath: string[] = path || []
+
+    if (keyName) {
+      currentPath = [...currentPath, keyName]
+    }
+
+    return currentPath
+  }
+
+  toggleIsExpanded = () => {
+    const { isExpanded } = this.state
+    const { onArrowClick } = this.props
+
+    const currentPath = this.getCurrentPath()
+
+    this.setState({ isExpanded: !isExpanded }, () => {
+      if (onArrowClick) {
+        onArrowClick(currentPath, this.state.isExpanded)
+      }
+    })
+  }
+
+  getPassedProps = () => {
+    const passedProps = _.pick(this.props, ['shouldExpandNode', 'onArrowClick'])
+    return passedProps
+  }
+
+  renderValueByType = () => {
+    const { data } = this.props
+
+    const currentPath = this.getCurrentPath()
+
+    const passedProps = this.getPassedProps()
+
     let $value = null
 
     if (_.isString(data)) {
@@ -37,39 +92,40 @@ class Rjv extends React.Component<RjvProps, any> {
     }
 
     if (_.isObject(data)) {
-      $value = <RjvObject data={data} />
+      $value = <RjvObject data={data} path={currentPath} {...passedProps} />
     }
 
     if (_.isArray(data)) {
-      $value = <RjvArray data={data} />
+      $value = <RjvArray data={data} path={currentPath} {...passedProps} />
     }
 
     return $value
   }
 
-  getIfShowArrow = (data: any) => {
+  getIfNendExpand = () => {
+    const { data } = this.props
     return _.isArray(data) || _.isObject(data)
   }
 
   render() {
-    const { isCollapsed } = this.state
+    const { isExpanded } = this.state
     const { keyName, data, hideRoot } = this.props
 
     const _keyName = keyName || 'Root'
 
-    const ifShowArrow = this.getIfShowArrow(data)
+    const ifNeedExpand = this.getIfNendExpand()
 
     const $arrow = (
       <Arrow
-        isCollapsed={isCollapsed}
-        ifShow={ifShowArrow}
-        onClick={this.toggleCollapsed}
+        isExpanded={isExpanded}
+        ifShow={ifNeedExpand}
+        onClick={this.toggleIsExpanded}
       />
     )
 
     const $key = <KeySpan>{_keyName} </KeySpan>
 
-    const $value = this.renderValueByType(data)
+    const $value = this.renderValueByType()
 
     if (hideRoot && _keyName === 'Root') {
       return $value
@@ -80,7 +136,7 @@ class Rjv extends React.Component<RjvProps, any> {
         <div>{$arrow}</div>
         <div>
           {$key}
-          {isCollapsed ? null : $value}
+          {ifNeedExpand && !isExpanded ? null : $value}
         </div>
       </Row>
     )

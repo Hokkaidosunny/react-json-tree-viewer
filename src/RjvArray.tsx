@@ -2,7 +2,7 @@ import * as React from 'react'
 import Rjv from './Rjv'
 
 const RjvArray: React.SFC<any> = props => {
-  const { data } = props
+  const { data, ...otherProps } = props
 
   const keys = []
 
@@ -11,7 +11,7 @@ const RjvArray: React.SFC<any> = props => {
   }
 
   return keys.map(key => (
-    <Rjv key={key} keyName={key} data={data[key]} />
+    <Rjv key={key} keyName={String(key)} data={data[key]} {...otherProps} />
   )) as any
 }
 

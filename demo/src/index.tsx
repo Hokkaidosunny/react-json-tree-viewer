@@ -62,9 +62,24 @@ class App extends React.Component {
       fingerPrintBean: null
     }
 
+    const data1 = {
+      a: {
+        a: 1
+      }
+    }
+
     return (
       <div>
-        <Rjv data={data} hideRoot />
+        <Rjv
+          data={data}
+          hideRoot
+          shouldExpandNode={(path: string[]) => {
+            return path.length <= 1
+          }}
+          onArrowClick={(path: string[], expanded) => {
+            console.log(path, expanded)
+          }}
+        />
       </div>
     )
   }
