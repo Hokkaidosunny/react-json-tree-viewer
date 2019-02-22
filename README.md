@@ -15,12 +15,24 @@ const json = {
   }
 }
 
-<Rjv data={json} />
+<Rjv data={json} hideRoot/>
 ```
 
 # Result
 
-<img src='.github/screenshot.jpd' width='300px'>
+<img src='.github/screenshot.jpg' width='300px'>
 
 # Props
+| Name             | Type                                        | Default | Description                               |
+| :--------------- | :------------------------------------------ | :------ | :---------------------------------------- |
+| data             | object/array                                | {}      | json data                                 |
+| hideRoot         | boolean                                     | false   | if show root                              |
+| shouldExpandNode | (path: string[], data: any) => boolean      | null    | if expand object or array in first render |
+| onArrowClick     | (path: string[], expanded: boolean) => void | null    | hanle arrow click                         |
+| labelRenderer    | (keyName: string) => JSX.Element            | null    | custom render label                       |
+| valueRenderer    | (data: any) => JSX.Element                  | null    | custom render value                       |
+| arrowStyle       | React css Properties                        | null    | custom arrow style                        |
+
+
+
 
