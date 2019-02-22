@@ -12,6 +12,9 @@ interface RjvProps {
   shouldExpandNode?: Function
   path?: string[]
   onArrowClick?: Function
+  labelRenderer?: Function
+  valueRenderer?: Function
+  arrowStyle?: React.CSSProperties
 }
 
 class Rjv extends React.Component<RjvProps, any> {
@@ -66,12 +69,19 @@ class Rjv extends React.Component<RjvProps, any> {
   }
 
   getPassedProps = () => {
-    const passedProps = _.pick(this.props, ['shouldExpandNode', 'onArrowClick'])
+    const passedProps = _.pick(this.props, [
+      'shouldExpandNode',
+      'onArrowClick',
+      'labelRenderer',
+      'valueRenderer',
+      'arrowStyle'
+    ])
+
     return passedProps
   }
 
   renderValueByType = () => {
-    const { data } = this.props
+    const { data, valueRenderer } = this.props
 
     const currentPath = this.getCurrentPath()
 
@@ -81,14 +91,26 @@ class Rjv extends React.Component<RjvProps, any> {
 
     if (_.isString(data)) {
       $value = <StringSpan>"{data}"</StringSpan>
+
+      if (valueRenderer) {
+        $value = valueRenderer(data)
+      }
     }
 
     if (_.isNumber(data)) {
       $value = <NumberSpan>{data}</NumberSpan>
+
+      if (valueRenderer) {
+        $value = valueRenderer(data)
+      }
     }
 
     if (_.isNull(data)) {
       $value = <NullSpan>null</NullSpan>
+
+      if (valueRenderer) {
+        $value = valueRenderer(data)
+      }
     }
 
     if (_.isObject(data)) {
@@ -109,22 +131,30 @@ class Rjv extends React.Component<RjvProps, any> {
 
   render() {
     const { isExpanded } = this.state
-    const { keyName, data, hideRoot } = this.props
+    const { keyName, hideRoot, labelRenderer, arrowStyle = {} } = this.props
 
     const _keyName = keyName || 'Root'
 
     const ifNeedExpand = this.getIfNendExpand()
 
+    // arrow
     const $arrow = (
       <Arrow
         isExpanded={isExpanded}
         ifShow={ifNeedExpand}
         onClick={this.toggleIsExpanded}
+        style={arrowStyle}
       />
     )
 
-    const $key = <KeySpan>{_keyName} </KeySpan>
+    // label
+    const $key = labelRenderer ? (
+      labelRenderer(_keyName)
+    ) : (
+      <KeySpan>{_keyName}: </KeySpan>
+    )
 
+    // value
     const $value = this.renderValueByType()
 
     if (hideRoot && _keyName === 'Root') {

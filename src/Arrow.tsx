@@ -11,7 +11,9 @@ const Arrow: React.SFC<Props> = props => {
   const { isExpanded, ifShow, ...otherProps } = props
 
   if (!ifShow) {
-    return <ArrowSpan style={{ visibility: 'hidden' }}>▶</ArrowSpan>
+    return (
+      <ArrowSpan style={{ visibility: 'hidden', ...props.style }}>▶</ArrowSpan>
+    )
   }
 
   return isExpanded ? (
