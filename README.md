@@ -1,2 +1,3 @@
-# react-json-viewer
-react json viewer
+# react-json-tree-viewerr
+
+react-json-tree-viewer
