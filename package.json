@@ -1,12 +1,19 @@
 {
   "name": "react-json-viewer",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "./lib/index.js",
   "repository": "https://github.com/Hokkaidosunny/react-json-viewer.git",
   "author": "xinfeng <xinfeng@pinduoduo.com>",
   "license": "MIT",
+  "keywords": [
+    "react",
+    "json",
+    "view",
+    "viewer",
+    "tree"
+  ],
   "scripts": {
-    "build": "rm -rf lib && bmp src -l typescript",
+    "build": "rm -rf lib && node build.js",
     "release": "standard-version && npm publish --registry=https://registry.npmjs.org"
   },
   "dependencies": {
