@@ -3,7 +3,14 @@ import _ from 'lodash'
 import RjvArray from './RjvArray'
 import RjvObject from './RjvObject'
 import Arrow from './Arrow'
-import { KeySpan, NumberSpan, StringSpan, NullSpan, Row } from './ui'
+import {
+  KeySpan,
+  NumberSpan,
+  StringSpan,
+  NullSpan,
+  BooleanSpan,
+  Row
+} from './ui'
 
 interface RjvProps {
   data: object
@@ -91,6 +98,14 @@ class Rjv extends React.Component<RjvProps, any> {
 
     if (_.isString(data)) {
       $value = <StringSpan>"{data}"</StringSpan>
+
+      if (valueRenderer) {
+        $value = valueRenderer(data)
+      }
+    }
+
+    if (_.isBoolean(data)) {
+      $value = <BooleanSpan>{String(data)}</BooleanSpan>
 
       if (valueRenderer) {
         $value = valueRenderer(data)

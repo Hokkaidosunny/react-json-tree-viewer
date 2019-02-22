@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import Rjv from '../../lib'
+import Rjv from '../../src'
 
 class App extends React.Component {
   render() {
@@ -28,17 +28,25 @@ class App extends React.Component {
       }
     }
 
+    const json = {
+      array: [1, 2, 3],
+      bool: true,
+      object: {
+        foo: 'bar'
+      }
+    }
+
     return (
       <div>
         <Rjv
-          data={data}
+          data={json}
           hideRoot
-          shouldExpandNode={(path: string[]) => {
-            return path.length <= 1
-          }}
-          onArrowClick={(path: string[], expanded) => {
-            console.log(path, expanded)
-          }}
+          // shouldExpandNode={(path: string[]) => {
+          //   return path.length <= 1
+          // }}
+          // onArrowClick={(path: string[], expanded) => {
+          //   console.log(path, expanded)
+          // }}
           // labelRenderer={raw => {
           //   return <span>{raw} - </span>
           // }}

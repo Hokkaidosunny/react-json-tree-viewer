@@ -26,6 +26,11 @@ export const NullSpan = styled.span`
   color: #ff45c7;
 `
 
+export const BooleanSpan = styled.span`
+  font-size: 12px;
+  color: #ee3500;
+`
+
 export const Row = styled.div`
   display: flex;
 `
