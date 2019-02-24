@@ -43,9 +43,10 @@ class App extends React.Component {
           // shouldExpandNode={(path: string[]) => {
           //   return path.length <= 1
           // }}
-          // onArrowClick={(path: string[], expanded) => {
-          //   console.log(path, expanded)
-          // }}
+          onArrowClick={(path: string[], expanded) => {
+            console.log(path, expanded)
+          }}
+
           // labelRenderer={raw => {
           //   return <span>{raw} - </span>
           // }}

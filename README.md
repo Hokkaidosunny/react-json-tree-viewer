@@ -15,12 +15,12 @@ const json = {
   }
 }
 
-<Rjv data={json} hideRoot/>
+<Rjv data={json} />
 ```
 
 # Result
 
-<img src='.github/screenshot.jpg' width='300px'>
+<img src='.github/screenshot.jpg' width='200px'>
 
 # Props
 | Name             | Type                                        | Default | Description                               |
@@ -31,6 +31,7 @@ const json = {
 | onArrowClick     | (path: string[], expanded: boolean) => void | null    | hanle arrow click                         |
 | labelRenderer    | (keyName: string) => JSX.Element            | null    | custom render label                       |
 | valueRenderer    | (data: any) => JSX.Element                  | null    | custom render value                       |
+| typeRenderer     | (data: any) => JSX.Element                  | null    | custom type laber                         |
 | arrowStyle       | React css Properties                        | null    | custom arrow style                        |
 
 
