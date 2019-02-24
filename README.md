@@ -1,5 +1,7 @@
 # react-json-tree-viewer
 
+[![Build Status](https://travis-ci.org/Hokkaidosunny/react-json-tree-viewer.svg?branch=master)](https://travis-ci.org/Hokkaidosunny/react-json-tree-viewer)
+
 react-json-tree-viewer
 
 # Usage
