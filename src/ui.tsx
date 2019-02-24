@@ -1,5 +1,11 @@
 import styled from 'styled-components'
 
+export const Row = styled.div`
+  display: flex;
+`
+
+export const Col = styled.div``
+
 export const ArrowSpan = styled.span`
   transition: 0.2s all;
   display: inline-block;
@@ -32,10 +38,6 @@ export const NullSpan = styled.span`
 export const BooleanSpan = styled.span`
   font-size: 13px;
   color: #ee3500;
-`
-
-export const Row = styled.div`
-  display: flex;
 `
 
 export const ObjectTypeSpan = styled.span`

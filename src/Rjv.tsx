@@ -11,7 +11,8 @@ import {
   BooleanSpan,
   ObjectTypeSpan,
   ArrayTypeSpan,
-  Row
+  Row,
+  Col
 } from './ui'
 
 interface RjvProps {
@@ -192,12 +193,12 @@ class Rjv extends React.Component<RjvProps, any> {
 
     return (
       <Row>
-        <div>{$arrow}</div>
-        <div>
+        <Col>{$arrow}</Col>
+        <Col>
           {$key}
           {$type}
           {ifNeedExpand && !isExpanded ? null : $value}
-        </div>
+        </Col>
       </Row>
     )
   }
