@@ -44,16 +44,18 @@ class App extends React.Component {
           // shouldExpandNode={(path: string[]) => {
           //   return path.length <= 1
           // }}
+          typeRenderer={() => {
+            console.log(111)
+          }}
           onArrowClick={(path: string[], expanded) => {
             console.log(path, expanded)
           }}
-
           // labelRenderer={raw => {
           //   return <span>{raw} - </span>
           // }}
-          // valueRenderer={raw => {
-          //   return <strong>{String(raw)}</strong>
-          // }}
+          valueRenderer={raw => {
+            return <strong>{String(raw)}</strong>
+          }}
           // arrowStyle={{
           //   color: 'red'
           // }}
