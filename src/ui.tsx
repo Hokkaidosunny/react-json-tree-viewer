@@ -1,9 +1,12 @@
 import styled from 'styled-components'
 
 export const ArrowSpan = styled.span`
-  font-size: 13px;
+  transition: 0.2s all;
+  display: inline-block;
+  font-size: 10px;
   color: #3ba3f1;
   cursor: pointer;
+  margin-right: 2px;
 `
 
 export const KeySpan = styled.span`
@@ -13,7 +16,7 @@ export const KeySpan = styled.span`
 
 export const NumberSpan = styled.span`
   font-size: 13px;
-  color: #00bd0c;
+  color: #ee3500;
 `
 
 export const StringSpan = styled.span`
@@ -33,4 +36,14 @@ export const BooleanSpan = styled.span`
 
 export const Row = styled.div`
   display: flex;
+`
+
+export const ObjectTypeSpan = styled.span`
+  font-size: 13px;
+  color: #77715d;
+`
+
+export const ArrayTypeSpan = styled.span`
+  font-size: 13px;
+  color: #b17cff;
 `

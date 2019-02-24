@@ -40,7 +40,6 @@ class App extends React.Component {
       <div>
         <Rjv
           data={json}
-          hideRoot
           // shouldExpandNode={(path: string[]) => {
           //   return path.length <= 1
           // }}

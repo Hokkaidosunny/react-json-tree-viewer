@@ -9,6 +9,8 @@ import {
   StringSpan,
   NullSpan,
   BooleanSpan,
+  ObjectTypeSpan,
+  ArrayTypeSpan,
   Row
 } from './ui'
 
@@ -21,6 +23,7 @@ interface RjvProps {
   onArrowClick?: Function
   labelRenderer?: Function
   valueRenderer?: Function
+  typeRenderer?: Function
   arrowStyle?: React.CSSProperties
 }
 
@@ -81,6 +84,7 @@ class Rjv extends React.Component<RjvProps, any> {
       'onArrowClick',
       'labelRenderer',
       'valueRenderer',
+      'typeRenderer',
       'arrowStyle'
     ])
 
@@ -88,55 +92,64 @@ class Rjv extends React.Component<RjvProps, any> {
   }
 
   renderValueByType = () => {
-    const { data, valueRenderer } = this.props
+    const { data, valueRenderer, typeRenderer } = this.props
 
     const currentPath = this.getCurrentPath()
 
     const passedProps = this.getPassedProps()
 
     let $value = null
+    let $type = null
+    let type = null
 
     if (_.isString(data)) {
+      type = 'string'
       $value = <StringSpan>"{data}"</StringSpan>
-
-      if (valueRenderer) {
-        $value = valueRenderer(data)
-      }
     }
 
     if (_.isBoolean(data)) {
+      type = 'boolean'
       $value = <BooleanSpan>{String(data)}</BooleanSpan>
-
-      if (valueRenderer) {
-        $value = valueRenderer(data)
-      }
     }
 
     if (_.isNumber(data)) {
+      type = 'number'
       $value = <NumberSpan>{data}</NumberSpan>
-
-      if (valueRenderer) {
-        $value = valueRenderer(data)
-      }
     }
 
     if (_.isNull(data)) {
+      type = 'null'
       $value = <NullSpan>null</NullSpan>
-
-      if (valueRenderer) {
-        $value = valueRenderer(data)
-      }
     }
 
     if (_.isObject(data)) {
+      type = 'object'
       $value = <RjvObject data={data} path={currentPath} {...passedProps} />
+      $type = (
+        <ObjectTypeSpan>{`{} ${Object.keys(data).length} keys`}</ObjectTypeSpan>
+      )
     }
 
     if (_.isArray(data)) {
+      type = 'array'
       $value = <RjvArray data={data} path={currentPath} {...passedProps} />
+      $type = <ArrayTypeSpan>{`[] ${data.length} items`}</ArrayTypeSpan>
     }
 
-    return $value
+    // custom value render
+    if (type !== 'object' && type !== 'array' && valueRenderer) {
+      $value = valueRenderer(data)
+    }
+
+    // custom type render
+    if ((type === 'object' || type === 'array') && typeRenderer) {
+      $type = typeRenderer(data)
+    }
+
+    return {
+      $type,
+      $value
+    }
   }
 
   getIfNendExpand = () => {
@@ -162,15 +175,16 @@ class Rjv extends React.Component<RjvProps, any> {
       />
     )
 
-    // label
-    const $key = labelRenderer ? (
-      labelRenderer(_keyName)
-    ) : (
-      <KeySpan>{_keyName}: </KeySpan>
-    )
+    // key
+    let $key = <KeySpan>{_keyName}: </KeySpan>
+
+    // custom key
+    if (labelRenderer) {
+      $key = labelRenderer(_keyName)
+    }
 
     // value
-    const $value = this.renderValueByType()
+    const { $type, $value } = this.renderValueByType()
 
     if (hideRoot && _keyName === 'Root') {
       return $value
@@ -181,6 +195,7 @@ class Rjv extends React.Component<RjvProps, any> {
         <div>{$arrow}</div>
         <div>
           {$key}
+          {$type}
           {ifNeedExpand && !isExpanded ? null : $value}
         </div>
       </Row>
