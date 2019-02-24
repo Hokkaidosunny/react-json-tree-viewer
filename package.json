@@ -14,7 +14,8 @@
   ],
   "scripts": {
     "build": "rm -rf lib && node build.js",
-    "release": "standard-version && npm publish --registry=https://registry.npmjs.org"
+    "release": "standard-version && npm publish --registry=https://registry.npmjs.org",
+    "test": "jest --config jest.config.json"
   },
   "dependencies": {
     "lodash": "^4.17.11",
@@ -23,12 +24,19 @@
     "styled-components": "^4.1.3"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.9.0",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
+    "@types/jest": "^24.0.6",
     "@types/lodash": "^4.14.121",
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",
     "@types/styled-components": "^4.1.10",
     "build-my-package": "^0.0.17",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "jest": "^24.1.0",
     "standard-version": "^5.0.0",
+    "ts-jest": "^24.0.0",
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0",
